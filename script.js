@@ -14,8 +14,9 @@ const pauseAudio = new Audio("sons/pause.mp3")
 const beepAudio = new Audio("sons/beep.mp3")
 const imagemDoTimer = document.querySelector(".app__card-primary-butto-icon")
 const btTimer = document.querySelector("#start-pause span")
+const tempoNaTela = document.querySelector("#timer")
 
-let tempoDecorridoEmSegundo = 5
+let tempoDecorridoEmSegundo = 1500
 let intervaloId = null
 
 function alterarContexto(contexto) {
@@ -53,27 +54,36 @@ musicaCheckobox.addEventListener("change", ()=>{
 btFoco.addEventListener('click', () =>{
     alterarContexto("foco")
     btFoco.classList.add("active")
+    tempoDecorridoEmSegundo = 1500
+    mostrarTempo()
 })
 
 btDescansoCurto.addEventListener('click', ()=>{
     alterarContexto("descanso-curto")
     btDescansoCurto.classList.add("active")
+    tempoDecorridoEmSegundo = 300
+    mostrarTempo()
+
 })
 
 btDescansoLongo.addEventListener("click",()=>{
     alterarContexto("descanso-longo")
     btDescansoLongo.classList.add("active")
+    tempoDecorridoEmSegundo = 900
+    mostrarTempo()
+
 })
 
 const contagemRegresiva = () => {
-    if (tempoDecorridoEmSegundo <= 0){
+    if (tempoDecorridoEmSegundo === 0){
         zerar()
         beepAudio.play()
         alert("tempo acabou")
         return
     }
-    console.log(`Tempo decorrido em segundos: ${tempoDecorridoEmSegundo}`)
+
     tempoDecorridoEmSegundo -=1
+    mostrarTempo()
 }
 
 btComecar.addEventListener("click",()=>{
@@ -98,3 +108,12 @@ function zerar(){
     clearInterval(intervaloId)
     intervaloId = null
 }
+
+function mostrarTempo(){
+    const tempo = new Date(tempoDecorridoEmSegundo * 1000)
+    const tempoFormatado = tempo.toLocaleString("pt-Br", {minute: "2-digit", second: "2-digit"})
+    tempoNaTela.innerHTML = `${tempoFormatado}`
+
+}
+
+mostrarTempo()
