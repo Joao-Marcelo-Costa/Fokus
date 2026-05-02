@@ -9,6 +9,9 @@ const musicaCheckobox = document.querySelector(".toggle-checkbox")
 const musica = new Audio("sons/luna-rise-part-one.mp3")
 musica.loop = true
 const btComecar = document.querySelector('#start-pause')
+const playAudio = new Audio("sons/play.wav")
+const pauseAudio = new Audio("sons/pause.mp3")
+const beepAudio = new Audio("sons/beep.mp3")
 
 let tempoDecorridoEmSegundo = 5
 let intervaloId = null
@@ -63,6 +66,7 @@ btDescansoLongo.addEventListener("click",()=>{
 const contagemRegresiva = () => {
     if (tempoDecorridoEmSegundo <= 0){
         zerar()
+        beepAudio.play()
         alert("tempo acabou")
         return
     }
@@ -77,8 +81,10 @@ btComecar.addEventListener("click",()=>{
 function iniciarOuPausar() {
     if (intervaloId){
         zerar()
+        pauseAudio.play()
         return
     }
+    playAudio.play()
     intervaloId = setInterval(contagemRegresiva, 1000)
 }
 
