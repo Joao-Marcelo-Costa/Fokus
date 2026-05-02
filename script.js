@@ -61,15 +61,28 @@ btDescansoLongo.addEventListener("click",()=>{
 })
 
 const contagemRegresiva = () => {
-    iniciar()
+    if (tempoDecorridoEmSegundo <= 0){
+        zerar()
+        alert("tempo acabou")
+        return
+    }
     console.log(`Tempo decorrido em segundos: ${tempoDecorridoEmSegundo}`)
     tempoDecorridoEmSegundo -=1
 }
 
 btComecar.addEventListener("click",()=>{
-    contagemRegresiva()
+    iniciarOuPausar()
 })
 
-function iniciar() {
+function iniciarOuPausar() {
+    if (intervaloId){
+        zerar()
+        return
+    }
     intervaloId = setInterval(contagemRegresiva, 1000)
+}
+
+function zerar(){
+    clearInterval(intervaloId)
+    intervaloId = null
 }
