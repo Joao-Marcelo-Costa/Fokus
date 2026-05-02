@@ -12,6 +12,8 @@ const btComecar = document.querySelector('#start-pause')
 const playAudio = new Audio("sons/play.wav")
 const pauseAudio = new Audio("sons/pause.mp3")
 const beepAudio = new Audio("sons/beep.mp3")
+const imagemDoTimer = document.querySelector(".app__card-primary-butto-icon")
+const btTimer = document.querySelector("#start-pause span")
 
 let tempoDecorridoEmSegundo = 5
 let intervaloId = null
@@ -80,10 +82,14 @@ btComecar.addEventListener("click",()=>{
 
 function iniciarOuPausar() {
     if (intervaloId){
+        imagemDoTimer.setAttribute("src", "/imagens/play_arrow.png")
+        btTimer.innerHTML = "Começar"
         zerar()
         pauseAudio.play()
         return
     }
+    btTimer.innerHTML = "Pausar"
+    imagemDoTimer.setAttribute("src", "/imagens/pause.png")
     playAudio.play()
     intervaloId = setInterval(contagemRegresiva, 1000)
 }
