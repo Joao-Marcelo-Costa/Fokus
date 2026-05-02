@@ -8,7 +8,10 @@ const botoes = document.querySelectorAll(".app__card-button")
 const musicaCheckobox = document.querySelector(".toggle-checkbox")
 const musica = new Audio("sons/luna-rise-part-one.mp3")
 musica.loop = true
+const btComecar = document.querySelector('#start-pause')
 
+let tempoDecorridoEmSegundo = 5
+let intervaloId = null
 
 function alterarContexto(contexto) {
     botoes.forEach((contexto)=>{
@@ -56,3 +59,17 @@ btDescansoLongo.addEventListener("click",()=>{
     alterarContexto("descanso-longo")
     btDescansoLongo.classList.add("active")
 })
+
+const contagemRegresiva = () => {
+    iniciar()
+    console.log(`Tempo decorrido em segundos: ${tempoDecorridoEmSegundo}`)
+    tempoDecorridoEmSegundo -=1
+}
+
+btComecar.addEventListener("click",()=>{
+    contagemRegresiva()
+})
+
+function iniciar() {
+    intervaloId = setInterval(contagemRegresiva, 1000)
+}
