@@ -4,11 +4,19 @@ const btDescansoCurto = document.querySelector(".app__card-button--curto")
 const btDescansoLongo = document.querySelector(".app__card-button--longo")
 const banner = document.querySelector(".app__image")
 const tituloH1 = document.querySelector(".app__title")
+const botoes = document.querySelectorAll(".app__card-button")
+const musicaCheckobox = document.querySelector(".toggle-checkbox")
+const musica = new Audio("sons/luna-rise-part-one.mp3")
+musica.loop = true
+
 
 function alterarContexto(contexto) {
-    html.setAttribute("data-contexto",contexto)
-    banner.setAttribute("src", `/imagens/${contexto}.png`)
-    switch(contexto){
+    botoes.forEach((contexto)=>{
+        contexto.classList.remove("active")
+    })
+    html.setAttribute("data-contexto",contexto)//muda a cor de fundo
+    banner.setAttribute("src", `/imagens/${contexto}.png`)//muda a imagem
+    switch(contexto){//muda o texto
         case "foco":
             tituloH1.innerHTML = `Otimize sua produtividade,<br>
                     <strong class="app__title-strong">mergulhe no que importa.</strong>`
@@ -27,14 +35,24 @@ function alterarContexto(contexto) {
     }
 }
 
+musicaCheckobox.addEventListener("change", ()=>{
+    if( musica.paused){
+        musica.play()
+    }else{
+        musica.pause()}
+
+})
 btFoco.addEventListener('click', () =>{
     alterarContexto("foco")
+    btFoco.classList.add("active")
 })
 
 btDescansoCurto.addEventListener('click', ()=>{
     alterarContexto("descanso-curto")
+    btDescansoCurto.classList.add("active")
 })
 
 btDescansoLongo.addEventListener("click",()=>{
     alterarContexto("descanso-longo")
+    btDescansoLongo.classList.add("active")
 })
