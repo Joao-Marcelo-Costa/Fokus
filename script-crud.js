@@ -2,8 +2,12 @@ const btAdicionarTarefa = document.querySelector(".app__button--add-task")
 const formAdicionarTarefa = document.querySelector(".app__form-add-task")
 const textArea = document.querySelector(".app__form-textarea")
 const ulTarefas = document.querySelector(".app__section-task-list")
+
 const listaDeTarefas = JSON.parse(localStorage.getItem("Tarefas")) || []
-console.log(listaDeTarefas)
+
+function atualizarTarefas (){
+    localStorage.setItem(`Tarefas`,JSON.stringify(listaDeTarefas))//adiciona adiciona a lista de tarefas à memoria
+}
 
 function criarElementoTarefa (tarefa){ //função que transforma uma tarefa object em um HTML dessa tarefa
     const li = document.createElement("li")
@@ -22,6 +26,13 @@ function criarElementoTarefa (tarefa){ //função que transforma uma tarefa obje
 
     const botao = document.createElement('button')
     botao.classList.add("app_button-edit")
+
+    botao.onclick = ()=>{
+        const novaDescricao = prompt("qual é o novo nome da tarefa ?")
+        paragrafo.textContent = novaDescricao
+        tarefa.descricao = novaDescricao
+        atualizarTarefas ()
+    }
     
     const imagemBotao = document.createElement("img")
     imagemBotao.setAttribute("src", "/imagens/edit.png" )
@@ -39,14 +50,17 @@ btAdicionarTarefa.addEventListener("click", () =>{
     formAdicionarTarefa.classList.toggle("hidden")
 })
 
-formAdicionarTarefa.addEventListener("submit", (evento)=>{
+formAdicionarTarefa.addEventListener("submit", (evento)=>{ //evento ao clicar em salvar tarefa
     evento.preventDefault()
     const tarefa = { 
     descricao: textArea.value //cria um objeto chamado tarefa com um índice descrição
     }
+    const elementoTarefa = criarElementoTarefa(tarefa) //recebe o objeto tarefa que acabou de ser criado
+    ulTarefas.append(elementoTarefa)//adiciona a tarefa que acabou de ser criada à tela
     listaDeTarefas.push(tarefa) //coloca o objeto chamado tarefa na lista de tarefas
-    localStorage.setItem(`Tarefas`,JSON.stringify(listaDeTarefas))
-    contagemDeTarefas ++
+    atualizarTarefas ()//adiciona adiciona a lista de tarefas à memoria
+    textArea.value=""//limpa o escrito do usuário do text area
+    formAdicionarTarefa.classList.add("hidden")//esconde o formulário de adicionar tarefas depois que a tarefa é adicionada
 })
 
 listaDeTarefas.forEach(tarefa => {
