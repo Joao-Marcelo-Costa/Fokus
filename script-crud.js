@@ -29,9 +29,11 @@ function criarElementoTarefa (tarefa){ //função que transforma uma tarefa obje
 
     botao.onclick = ()=>{
         const novaDescricao = prompt("qual é o novo nome da tarefa ?")
-        paragrafo.textContent = novaDescricao
-        tarefa.descricao = novaDescricao
-        atualizarTarefas ()
+        if (novaDescricao){//verifica se ha algum valor em nova descrição
+            paragrafo.textContent = novaDescricao
+            tarefa.descricao = novaDescricao
+            atualizarTarefas ()
+        } 
     }
     
     const imagemBotao = document.createElement("img")
