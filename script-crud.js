@@ -4,7 +4,7 @@ const textArea = document.querySelector(".app__form-textarea")
 const ulTarefas = document.querySelector(".app__section-task-list")
 
 const listaDeTarefas = JSON.parse(localStorage.getItem("Tarefas")) || []
-
+debugger
 function atualizarTarefas (){
     localStorage.setItem(`Tarefas`,JSON.stringify(listaDeTarefas))//adiciona adiciona a lista de tarefas à memoria
 }
@@ -24,10 +24,14 @@ function criarElementoTarefa (tarefa){ //função que transforma uma tarefa obje
     paragrafo.classList.add("app__section-task-list-item-description")
     paragrafo.textContent = tarefa.descricao
 
-    const botao = document.createElement('button')
-    botao.classList.add("app_button-edit")
+    const botaoEditar = document.createElement('button')
+    botaoEditar.classList.add("app_button-edit")
 
-    botao.onclick = ()=>{
+    const imagemBotaoEditar = document.createElement("img")
+    imagemBotaoEditar.setAttribute("src", "/imagens/edit.png" )
+    botaoEditar.append(imagemBotaoEditar)
+
+    botaoEditar.onclick = ()=>{
         const novaDescricao = prompt("qual é o novo nome da tarefa ?")
         if (novaDescricao){//verifica se ha algum valor em nova descrição
             paragrafo.textContent = novaDescricao
@@ -36,13 +40,24 @@ function criarElementoTarefa (tarefa){ //função que transforma uma tarefa obje
         } 
     }
     
-    const imagemBotao = document.createElement("img")
-    imagemBotao.setAttribute("src", "/imagens/edit.png" )
-    botao.append(imagemBotao)
+    const botaoDeletar =document.createElement("button")
+    botaoDeletar.classList.add("app__button-delete")
+    
+    const imagemBotaoDeletar = document.createElement("img")
+    imagemBotaoDeletar.setAttribute("src","/imagens/delete.png")
+    botaoDeletar.append(imagemBotaoDeletar)
 
+    botaoDeletar.onclick = ()=>{
+        li.classList.add("hidden")
+        listaDeTarefas.pop()
+        tarefa.descricao = null
+        atualizarTarefas ()
+    }
+    
     li.append(svg)
     li.append(paragrafo)
-    li.append(botao)
+    li.append(botaoEditar)
+    li.append(botaoDeletar)
 
     return li
 }
