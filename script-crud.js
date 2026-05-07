@@ -2,6 +2,8 @@ const btAdicionarTarefa = document.querySelector(".app__button--add-task")
 const formAdicionarTarefa = document.querySelector(".app__form-add-task")
 const textArea = document.querySelector(".app__form-textarea")
 const ulTarefas = document.querySelector(".app__section-task-list")
+const btCancelarAdicaoDeTarefa = document.querySelector(".app__form-footer__button--cancel")
+const btDeletarTarefaNoFormulario = document.querySelector(".app__form-footer__button--delete")
 
 const listaDeTarefas = JSON.parse(localStorage.getItem("Tarefas")) || []
 debugger
@@ -65,6 +67,15 @@ function criarElementoTarefa (tarefa){ //função que transforma uma tarefa obje
 let contagemDeTarefas = 0
 btAdicionarTarefa.addEventListener("click", () =>{
     formAdicionarTarefa.classList.toggle("hidden")
+})
+
+btCancelarAdicaoDeTarefa.addEventListener("click", ()=>{
+    formAdicionarTarefa.classList.add("hidden")
+    textArea.value = ""
+})
+
+btDeletarTarefaNoFormulario.addEventListener("click", ()=>{
+    textArea.value = ""
 })
 
 formAdicionarTarefa.addEventListener("submit", (evento)=>{ //evento ao clicar em salvar tarefa
