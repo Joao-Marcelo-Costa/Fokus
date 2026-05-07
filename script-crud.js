@@ -4,8 +4,11 @@ const textArea = document.querySelector(".app__form-textarea")
 const ulTarefas = document.querySelector(".app__section-task-list")
 const btCancelarAdicaoDeTarefa = document.querySelector(".app__form-footer__button--cancel")
 const btDeletarTarefaNoFormulario = document.querySelector(".app__form-footer__button--delete")
+const paragrafoDescricaoTarefa = document.querySelector(".app__section-active-task-description")
 
 const listaDeTarefas = JSON.parse(localStorage.getItem("Tarefas")) || []
+let tarefaSelecionada = null
+
 debugger
 function atualizarTarefas (){
     localStorage.setItem(`Tarefas`,JSON.stringify(listaDeTarefas))//adiciona adiciona a lista de tarefas à memoria
@@ -60,6 +63,23 @@ function criarElementoTarefa (tarefa){ //função que transforma uma tarefa obje
     li.append(paragrafo)
     li.append(botaoEditar)
     li.append(botaoDeletar)
+
+    li.onclick = ()=>{
+        document.querySelectorAll('.app__section-task-list-item-active')
+        .forEach(elemento => {
+        elemento.classList.remove("app__section-task-list-item-active")});
+
+        if (tarefaSelecionada == tarefa){
+            paragrafoDescricaoTarefa.textContent = ""
+            tarefaSelecionada = null
+            return
+        }
+        tarefaSelecionada = tarefa
+        paragrafoDescricaoTarefa.textContent = tarefa.descricao 
+
+        
+        li.classList.add('app__section-task-list-item-active')
+    }
 
     return li
 }
