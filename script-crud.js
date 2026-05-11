@@ -8,8 +8,8 @@ const paragrafoDescricaoTarefa = document.querySelector(".app__section-active-ta
 
 const listaDeTarefas = JSON.parse(localStorage.getItem("Tarefas")) || []
 let tarefaSelecionada = null
+let LiTarefaSelecionada = null
 
-debugger
 function atualizarTarefas (){
     localStorage.setItem(`Tarefas`,JSON.stringify(listaDeTarefas))//adiciona adiciona a lista de tarefas à memoria
 }
@@ -66,19 +66,21 @@ function criarElementoTarefa (tarefa){ //função que transforma uma tarefa obje
 
     li.onclick = ()=>{
         document.querySelectorAll('.app__section-task-list-item-active')
-        .forEach(elemento => {
-        elemento.classList.remove("app__section-task-list-item-active")});
+        .forEach(elemento => {//para cada tarefa
+            elemento.classList.remove("app__section-task-list-item-active")});//remove a classe ativa de todas
 
-        if (tarefaSelecionada == tarefa){
-            paragrafoDescricaoTarefa.textContent = ""
-            tarefaSelecionada = null
-            return
-        }
-        tarefaSelecionada = tarefa
-        paragrafoDescricaoTarefa.textContent = tarefa.descricao 
+            if (tarefaSelecionada == tarefa){
+                tarefaSelecionada = null
+                LiTarefaSelecionada = null
 
-        
-        li.classList.add('app__section-task-list-item-active')
+                return
+            }
+            tarefaSelecionada = tarefa
+            LiTarefaSelecionada = li
+            paragrafoDescricaoTarefa.textContent = tarefa.descricao 
+
+            
+            li.classList.add('app__section-task-list-item-active')
     }
 
     return li
@@ -115,3 +117,11 @@ listaDeTarefas.forEach(tarefa => {
     const elementoTarefa = criarElementoTarefa(tarefa)
     ulTarefas.append(elementoTarefa)
 });
+
+document.addEventListener("FocoFinalizado", ()=>{
+    if (LiTarefaSelecionada && tarefaSelecionada){
+        LiTarefaSelecionada.classList.remove("app__section-task-list-item-active")
+        LiTarefaSelecionada.classList.add("app__section-task-list-item-complete")
+        //LiTarefaSelecionada.querySelector("button").setAttribute("disabled", "True")
+    }
+})
