@@ -16,7 +16,7 @@ const imagemDoTimer = document.querySelector(".app__card-primary-butto-icon")
 const btTimer = document.querySelector("#start-pause span")
 const tempoNaTela = document.querySelector("#timer")
 
-let tempoDecorridoEmSegundo = 1500
+let tempoDecorridoEmSegundo = 15
 let intervaloId = null
 
 function alterarContexto(contexto) {
@@ -75,8 +75,13 @@ btDescansoLongo.addEventListener("click",()=>{
 })
 
 const contagemRegresiva = () => {
-    if (tempoDecorridoEmSegundo === 0){
+    if (tempoDecorridoEmSegundo <= 0){
         zerar()
+        const focoAtivo = html.getAttribute("data-contexto") == "foco"
+        if (focoAtivo) {
+            const evento = new CustomEvent("FocoFinalizado")
+            document.dispatchEvent(evento)
+        }
         beepAudio.play()
         alert("tempo acabou")
         return

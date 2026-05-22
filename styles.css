@@ -322,9 +322,6 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-.hidden {
-    display: none;
-}
 
 .app__section-task-container {
     display: flex;
@@ -380,7 +377,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .app_button-edit,
-.app_button-more {
+.app_button-more,
+.app__button-delete {
     border: none;
     cursor: pointer;
     outline: inherit;
@@ -528,4 +526,8 @@ h1, h2, h3, h4, h5, h6 {
     color: #e6e6e6;
     opacity: 0.8;
     cursor: not-allowed;
+}
+
+.hidden {
+    display: none;
 }
